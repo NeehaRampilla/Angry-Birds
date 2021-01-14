@@ -1,29 +1,45 @@
-class Slingshot{
-    constructor(body1,point2){
-        var opition= {
-            bodyA:body1,
-            pointB:point2,
-            length:10,
-            stiffness:0.04,
+class SlingShot{
+    constructor(bodyA, pointB){
+        var options = {
+            bodyA: bodyA,
+            pointB: pointB,
+            stiffness: 0.04,
+            length: 10
         }
-    this.sling=Constraint.create(opition);
-    World.add (world, this.sling);
-    this.pointB=point2
-            }
-    display(){
-        if (this.sling.bodyA){
-            var point1 = this.sling.bodyA.position;
-            var point2 = this.pointB;
-            push ();
-            strokeWeight(4);
-            line (point1.x, point1.y, point2.x, point2.y);
-            pop ();
-        
-        }
-        
+        this.pointB = pointB
+        this.sling = Constraint.create(options);
+        World.add(world, this.sling);
+        this.sling1 = loadImage("sprites/sling1.png");
+        this.sling2 = loadImage("sprites/sling2.png");
+        this.sling3 = loadImage("sprites/sling3.png");
     }
-   fly(){
-       this.sling.bodyA=null;
 
-   }
+    fly(){
+        this.sling.bodyA = null;
+    }
+
+    display(){
+        image (this.sling1,200,20);
+        image (this.sling2,170,20);
+        if(this.sling.bodyA){
+            var pointA = this.sling.bodyA.position;
+            var pointB = this.pointB;
+            push ();
+            stroke("#301608");
+            if(pointA.x>220) {
+                strokeWeight(3);
+                line(pointA.x+25, pointA.y, pointB.x-10, pointB.y);
+                line(pointA.x-20, pointA.y, pointB.x+30, pointB.y);
+                image (this.sling3,pointA.x+25, pointA.y-10, 15,30);
+            } else {
+                strokeWeight(7);
+                line(pointA.x-25, pointA.y, pointB.x-10, pointB.y);
+                line(pointA.x-20, pointA.y, pointB.x+30, pointB.y);
+                image (this.sling3,pointA.x-30, pointA.y-10, 15,30);
+            } 
+            
+            pop ();
+        }
+    }
+    
 }
